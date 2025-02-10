@@ -30,39 +30,65 @@ const generatePassword = () => {
     }
   });
 
-  for(let i = 0 ; i < passLength; i++){
-    let randomChar = staticPassword[Math.floor(Math.random() * staticPassword.length)];
-    if(excludeDuplicate){
-        !randomPassword.includes(randomChar) || randomChar == " " ? randomPassword += randomChar : i--;
-    }else{
-        randomPassword += randomChar;
+  for (let i = 0; i < passLength; i++) {
+    let randomChar =
+      staticPassword[Math.floor(Math.random() * staticPassword.length)];
+    if (excludeDuplicate) {
+      !randomPassword.includes(randomChar) || randomChar == " "
+        ? (randomPassword += randomChar)
+        : i--;
+    } else {
+      randomPassword += randomChar;
     }
   }
   passwordInput.value = randomPassword;
+  updateSlider();
 };
 
-const updatePassIndicator = () => {
-    passIndicator.id = lengthSlider.value <= 8 ? "weak" : lengthSlider.value <= 16 ? "medium" : "strong";
-}
+// const updatePassIndicator1 = () => {  // This logic is only meant for the length if the length is less than 8 
+//   passIndicator.id =                  // then show red and if it is strong then show the green.
+//     lengthSlider.value <= 8
+//       ? "weak"
+//       : lengthSlider.value <= 16
+//       ? "medium"
+//       : "strong";
+// };
 
+// This is the actual logic to test whether it is a strong password or the weak password.
+const updatePassIndicator = () => { 
+  const password = passwordInput.value;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasNumbers = /[0-9]/.test(password);
+  const hasSymbols = /[!@#$%^&*()]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+
+  if (hasUpperCase && hasNumbers && hasSymbols && hasLowerCase) {
+    passIndicator.id = "strong";
+  } else if ((hasUpperCase && hasNumbers) || (hasLowerCase && hasSymbols)) {
+    passIndicator.id = "medium";
+  } else {
+    passIndicator.id = "weak";
+  }
+};
 
 const updateSlider = () => {
-    document.querySelector(".pass-length span").innerText = lengthSlider.value;
-    generatePassword();
-    updatePassIndicator();
-}
-updateSlider();
+  document.querySelector(".pass-length span").innerText = lengthSlider.value;
+  // generatePassword();
+  updatePassIndicator();
+};
+// updateSlider(); // this is responsible for the password to be generated when the window loads because function is called immediately after initialization.
 
 const copyPassword = () => {
-    navigator.clipboard.writeText(passwordInput.value);
-    copyIcon.innerText = "check";
-    copyIcon.style.color = "#4285f4";
-    setTimeout(() => {
-        copyIcon.innerText = "copy_all";
-        copyIcon.style.color = "#707070";
-    },1500);
-}
+  navigator.clipboard.writeText(passwordInput.value);
+  copyIcon.innerText = "check";
+  copyIcon.style.color = "#4285f4";
+  setTimeout(() => {
+    copyIcon.innerText = "copy_all";
+    copyIcon.style.color = "#707070";
+  }, 1500);
+};
 
-copyIcon.addEventListener("click",copyPassword);
-lengthSlider.addEventListener("input",updateSlider);
-generateBtn.addEventListener("click",generatePassword);
+
+copyIcon.addEventListener("click", copyPassword);
+// lengthSlider.addEventListener("input", updateSlider);
+generateBtn.addEventListener("click", generatePassword);
