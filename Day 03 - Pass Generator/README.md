@@ -37,8 +37,7 @@ To run this project locally, follow these steps:
    ```bash
    cd 100-days-of-javascript/Day\ 03\ -\ Pass\ Generator
    ```
-   ```
-
+   
 3. Open `index.html` in your preferred web browser.
 
 ## Usage
