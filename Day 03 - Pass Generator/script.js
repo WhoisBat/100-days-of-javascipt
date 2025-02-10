@@ -45,7 +45,7 @@ const generatePassword = () => {
   updateSlider();
 };
 
-// const updatePassIndicator1 = () => {  // This logic is only meant for the length if the length is less than 8 
+// const updatePassIndicator1 = () => {  // This logic is only meant for the length if the length is less than 8
 //   passIndicator.id =                  // then show red and if it is strong then show the green.
 //     lengthSlider.value <= 8
 //       ? "weak"
@@ -55,7 +55,7 @@ const generatePassword = () => {
 // };
 
 // This is the actual logic to test whether it is a strong password or the weak password.
-const updatePassIndicator = () => { 
+const updatePassIndicator = () => {
   const password = passwordInput.value;
   const hasUpperCase = /[A-Z]/.test(password);
   const hasNumbers = /[0-9]/.test(password);
@@ -70,9 +70,11 @@ const updatePassIndicator = () => {
     passIndicator.id = "weak";
   }
 };
-
-const updateSlider = () => {
+const changeSliderValue = () => {
   document.querySelector(".pass-length span").innerText = lengthSlider.value;
+};
+const updateSlider = () => {
+  // document.querySelector(".pass-length span").innerText = lengthSlider.value;
   // generatePassword();
   updatePassIndicator();
 };
@@ -88,7 +90,6 @@ const copyPassword = () => {
   }, 1500);
 };
 
-
 copyIcon.addEventListener("click", copyPassword);
-// lengthSlider.addEventListener("input", updateSlider);
+lengthSlider.addEventListener("input", changeSliderValue);
 generateBtn.addEventListener("click", generatePassword);
