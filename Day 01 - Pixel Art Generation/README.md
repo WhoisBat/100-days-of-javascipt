@@ -31,7 +31,3 @@ This project is a simple pixel art generator created using HTML, CSS, and JavaSc
 - HTML
 - CSS
 - JavaScript
-
-## License
-
-This project is licensed under the MIT License.
